@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read sensor data from CSV files
+csv_files = ["TrackerData0.csv", "TrackerData1.csv", "TrackerData2.csv", "TrackerData3.csv"]
+sensor_data = []
+
+for file_path in csv_files:
+    data = np.genfromtxt(file_path, delimiter=',', skip_header=1)
+    sensor_data.append(data)
+
+# Define a list of distinct colors for each sensor
+colors = ['b', 'r', 'g', 'm']
+
+# Create a figure for the Y-Z projection plot
+plt.figure(figsize=(8, 8))
+
+# Plot sensor paths in the Y-Z plane
+for i, data in enumerate(sensor_data):
+    y, z = data[:, 2], data[:, 3]
+    label = f"Sensor {i}"
+
+    # Choose a color from the list for each sensor
+    color = colors[i]
+
+    plt.plot(y, z, label=label, color=color)
+
+# Set labels and title
+plt.xlabel('Y')
+plt.ylabel('Z')
+plt.title('Sensor Motion Paths - Y-Z Projection')
+plt.legend()
+
+# Show the plot
+plt.show()
